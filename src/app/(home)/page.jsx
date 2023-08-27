@@ -1,5 +1,12 @@
-import Image from "next/image";
+import Product from '@/components/product/Product';
+import Slider from '@/components/slider/Slider';
+import Image from 'next/image';
 
 export default function Home() {
-  return <main>Home</main>;
+  return (
+    <>
+      <Slider></Slider>
+      <Product></Product>
+    </>
+  );
 }
