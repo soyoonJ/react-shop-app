@@ -11,11 +11,21 @@ import styles from "./InnerHeader.module.scss";
 
 import logo from "@/assets/colorful.svg";
 import classNames from "classnames";
+import { useDispatch, useSelector } from "react-redux";
+import { FILTER_BY_SEARCH } from "@/redux/slice/filterSlice";
+import { selectProducts } from "@/redux/slice/productSlice";
 
 const InnerHeader = () => {
   const router = useRouter();
 
   const [search, setSearch] = useState("");
+
+  const products = useSelector(selectProducts);
+
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(FILTER_BY_SEARCH({ products, search }));
+  }, [dispatch, products, search]);
 
   const handleClick = () => {
     router.push("/cart");

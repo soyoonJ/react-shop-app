@@ -1,7 +1,7 @@
-import { db } from '@/firebase/firebase';
-import { collection, onSnapshot, orderBy, query } from 'firebase/firestore';
-import React, { useState, useCallback, useEffect } from 'react';
-import { toast } from 'react-toastify';
+import { db } from "@/firebase/firebase";
+import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
+import React, { useState, useCallback, useEffect } from "react";
+import { toast } from "react-toastify";
 
 const useFetchCollection = (collectionName) => {
   const [data, setData] = useState([]);
@@ -11,7 +11,7 @@ const useFetchCollection = (collectionName) => {
     setIsLoading(true);
     try {
       const docRef = collection(db, collectionName);
-      const q = query(docRef, orderBy('createdAt', 'desc'));
+      const q = query(docRef, orderBy("createdAt", "desc"));
 
       onSnapshot(q, (snapshot) => {
         const allData = snapshot.docs.map((doc) => ({
@@ -19,7 +19,7 @@ const useFetchCollection = (collectionName) => {
           ...doc.data(),
         }));
 
-        console.log('allData', allData);
+        // console.log('allData', allData);
         setData(allData);
         setIsLoading(false);
       });

@@ -8,11 +8,7 @@ const Divider = ({ space = 22, color = "#ccc", ...restProps }) => {
     background: color,
   };
 
-  return (
-    <div className={styles.line} style={style} {...restProps}>
-      Divider
-    </div>
-  );
+  return <div className={styles.line} style={style} {...restProps}></div>;
 };
 
 export default Divider;

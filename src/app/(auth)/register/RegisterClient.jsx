@@ -35,7 +35,7 @@ const RegisterClient = () => {
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user;
-        console.log("user", user);
+        // console.log("user", user);
         setIsLoading(false);
 
         toast.success("등록 성공...");
