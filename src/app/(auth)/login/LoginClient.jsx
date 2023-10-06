@@ -18,7 +18,7 @@ import {
   signInWithEmailAndPassword,
   signInWithPopup,
 } from "firebase/auth";
-import { auth } from "../../../firebase/firebase";
+import { auth } from "@/firebase/firebase";
 
 const LoginClient = () => {
   const [email, setEmail] = useState("");
@@ -38,10 +38,12 @@ const LoginClient = () => {
 
     signInWithEmailAndPassword(auth, email, password)
       .then(() => {
+        setIsLoading(false);
         toast.success("로그인에 성공했습니다.");
         redirectUser();
       })
       .catch((error) => {
+        setIsLoading(false);
         toast.error(error.message);
       });
   };
@@ -54,7 +56,6 @@ const LoginClient = () => {
         redirectUser();
       })
       .catch((error) => {
-        setIsLoading(false);
         toast.error(error.message);
       });
   };
