@@ -1,6 +1,7 @@
 "use client";
 import Image from "next/image";
 import React, { useState } from "react";
+import Link from "next/link";
 
 import LogoPath from "@/assets/colorful.svg";
 import { useRouter } from "next/navigation";
@@ -11,7 +12,6 @@ import Input from "@/components/input/Input";
 import AutoSigninCheckbox from "@/components/autoSigninCheckbox/AutoSigninCheckbox";
 import Divider from "@/components/divider/Divider";
 import Button from "@/components/button/Button";
-import Link from "next/link";
 import { toast } from "react-toastify";
 import {
   GoogleAuthProvider,
