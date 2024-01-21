@@ -16,6 +16,7 @@ import { STORE_PRODUCTS } from "@/redux/slice/productSlice";
 import Heading from "@/components/heading/Heading";
 import InfoBox from "@/components/infoBox/InfoBox";
 import priceFormat from "@/utils/priceFormat";
+import Chart from "@/components/chart/Chart";
 
 const earningIcon = <AiFillDollarCircle size={30} color="#b624ff" />;
 const productIcon = <BsCart4 size={30} color="#1f93ff" />;
@@ -62,6 +63,10 @@ const DashboardClient = () => {
           count={`${orders.length}건`}
           icon={ordersIcon}
         />
+      </div>
+
+      <div>
+        <Chart />
       </div>
     </div>
   );
