@@ -31,7 +31,7 @@ const LoginClient = () => {
   const redirectUser = () => {
     router.push("/");
   };
-  const loginUser = (e) => {
+  const loginUser = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     toast.info("성공!");
     setIsLoading(true);

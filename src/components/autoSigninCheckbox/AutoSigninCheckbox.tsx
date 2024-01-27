@@ -1,7 +1,16 @@
-import React from "react";
+import React, { ChangeEvent } from "react";
 import Checkbox from "../checkbox/Checkbox";
 import Tooltip from "../tooltip/Tooltip";
 import styles from "./AutoSignInCheckbox.module.scss";
+
+interface IAutoSignInCheckboxProps {
+  label?: string;
+  checked: boolean;
+  disabled?: boolean;
+  orientation?: "top" | "bottom" | "left" | "right";
+  message?: string;
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+}
 
 const AutoSigninCheckbox = ({
   label = "자동 로그인",
@@ -11,7 +20,7 @@ const AutoSigninCheckbox = ({
   message = "개인 정보를 위해 본인 기기에서만 이용해주세요.",
   onChange,
   ...restProps
-}) => {
+}: IAutoSignInCheckboxProps) => {
   return (
     <div className={styles.wrapper}>
       <Checkbox

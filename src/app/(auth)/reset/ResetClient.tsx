@@ -15,7 +15,7 @@ const ResetClient = () => {
   const [email, setEmail] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  const resetPassword = (e) => {
+  const resetPassword = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
 
@@ -24,7 +24,7 @@ const ResetClient = () => {
         setIsLoading(false);
         toast.success("비밀번호 업데이트를 위해서 이메일을 체크해주세요.");
       })
-      .catch(() => {
+      .catch((error) => {
         setIsLoading(false);
         toast.error(error.message);
       });
@@ -44,6 +44,8 @@ const ResetClient = () => {
 
             <form onSubmit={resetPassword}>
               <Input
+                id="reset"
+                label="reset"
                 type="text"
                 placeholder="Email"
                 required

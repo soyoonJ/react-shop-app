@@ -1,7 +1,25 @@
 import classNames from "classnames";
-import React, { useState } from "react";
+import React, { ChangeEvent, useState } from "react";
 import styles from "./Input.module.scss";
 import Icon from "../icon/Icon";
+
+interface IInputProps {
+  id: string;
+  label: string;
+  name?: string;
+  labelVisible?: boolean;
+  icon?: "letter" | "lock" | "show" | "hide";
+  email?: boolean;
+  password?: boolean;
+  placeholder?: string;
+  readonly?: boolean;
+  disabled?: boolean;
+  value?: string;
+  error?: { message: string };
+  className?: string;
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  [x: string]: any;
+}
 
 const Input = ({
   id,
@@ -19,7 +37,7 @@ const Input = ({
   className = "",
   onChange,
   ...restProps
-}) => {
+}: IInputProps) => {
   const [inputValue, setInputValue] = useState(value ? value : "");
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
@@ -34,7 +52,7 @@ const Input = ({
 
     return "text";
   };
-  const handleChange = (e) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
     onChange(e);
   };
