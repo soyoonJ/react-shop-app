@@ -1,21 +1,28 @@
 "use client";
 
 import { db } from "@/firebase/firebase";
+import { IOrder } from "@/types";
+import { getErrorMessage } from "@/utils/getErrorMessage";
 import { doc, setDoc, Timestamp } from "firebase/firestore";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import { toast } from "react-toastify";
 import Button from "../button/Button";
 import Loader from "../loader/Loader";
 import styles from "./ChangeOrderStatus.module.scss";
 
-const ChangeOrderStatus = ({ order, id }) => {
+interface IChangeOrderStatusProps {
+  order: IOrder;
+  id: string;
+}
+
+const ChangeOrderStatus = ({ order, id }: IChangeOrderStatusProps) => {
   const router = useRouter();
 
   const [status, setStatus] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  const editOrder = (e, id) => {
+  const editOrder = (e: FormEvent<HTMLFormElement>, id: string) => {
     e.preventDefault();
 
     const orderData = {
@@ -37,7 +44,7 @@ const ChangeOrderStatus = ({ order, id }) => {
       toast.success("주문 상태가 변경되었습니다.");
       router.push("/admin/orders");
     } catch (error) {
-      toast.error(error.message);
+      toast.error(getErrorMessage(error));
       setIsLoading(false);
     }
   };
