@@ -2,17 +2,23 @@
 
 import { useParams } from "next/navigation";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import Button from "@/components/button/Button";
 import Heading from "@/components/heading/Heading";
 import Loader from "@/components/loader/Loader";
-import { db } from "@/firebase/firebase";
+import { db, storage } from "@/firebase/firebase";
 import useFetchDocument from "@/hooks/useFetchDocument";
 import { doc, setDoc, Timestamp } from "firebase/firestore";
-import { deleteObject } from "firebase/storage";
+import {
+  deleteObject,
+  getDownloadURL,
+  ref,
+  uploadBytesResumable,
+} from "firebase/storage";
 import styles from "../../add-product/AddProduct.module.scss";
 import { categories } from "../../add-product/AddProductClient";
 import { toast } from "react-toastify";
+import { getErrorMessage } from "@/utils/getErrorMessage";
 
 const EditProductClient = () => {
   const { id } = useParams();
@@ -20,19 +26,23 @@ const EditProductClient = () => {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
-  const { document } = useFetchDocument("products", id);
+  const { document } = useFetchDocument("products", id as string);
   const [product, setProduct] = useState(document);
 
   useEffect(() => {
     setProduct(document);
   }, [document]);
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
     setProduct({ ...product, [name]: value });
   };
 
-  const handleImageChange = (e) => {
+  const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files) return;
+
     const file = e.target.files[0];
 
     const storageRef = ref(storage, `images/${Date.now()}${file.name}`);
@@ -57,9 +67,11 @@ const EditProductClient = () => {
     );
   };
 
-  const editProduct = (e) => {
+  const editProduct = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
+
+    if (!product || !document) return;
 
     if (product.imageURL !== document.imageURL) {
       const storageRef = ref(storage, document.imageURL);
@@ -67,7 +79,7 @@ const EditProductClient = () => {
     }
 
     try {
-      setDoc(doc(db, "products", id), {
+      setDoc(doc(db, "products", id as string), {
         name: product.name,
         imageURL: product.imageURL,
         price: Number(product.price),
@@ -83,7 +95,7 @@ const EditProductClient = () => {
       router.push("/admin/all-products");
     } catch (error) {
       setIsLoading(false);
-      toast.error(error.message);
+      toast.error(getErrorMessage(error));
     }
   };
 

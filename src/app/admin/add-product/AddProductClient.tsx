@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { ChangeEvent, FormEvent, useState } from "react";
 import styles from "./AddProduct.module.scss";
 import { useRouter } from "next/navigation";
 import Loader from "@/components/loader/Loader";
@@ -9,6 +9,7 @@ import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { db, storage } from "@/firebase/firebase";
 import { toast } from "react-toastify";
 import { Timestamp, addDoc, collection } from "firebase/firestore";
+import { getErrorMessage } from "@/utils/getErrorMessage";
 
 export const categories = [
   { id: 1, name: "Laptop" },
@@ -40,12 +41,16 @@ const AddProductClient = () => {
 
   const router = useRouter();
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
     setProduct({ ...product, [name]: value });
   };
 
-  const handleImageChange = (e) => {
+  const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files) return;
+
     const file = e.target.files[0];
 
     const storageRef = ref(storage, `images/${Date.now()}${file.name}`);
@@ -70,7 +75,7 @@ const AddProductClient = () => {
     );
   };
 
-  const addProduct = (e) => {
+  const addProduct = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
 
@@ -93,7 +98,7 @@ const AddProductClient = () => {
       router.push("/admin/all-products");
     } catch (error) {
       setIsLoading(false);
-      toast.error(error.message);
+      toast.error(getErrorMessage(error));
     }
   };
 
