@@ -6,10 +6,11 @@ import Loader from "@/components/loader/Loader";
 import { db } from "@/firebase/firebase";
 import useFetchDocument from "@/hooks/useFetchDocument";
 import { selectUserID, selectUserName } from "@/redux/slice/authSlice";
+import { getErrorMessage } from "@/utils/getErrorMessage";
 import { addDoc, collection, Timestamp } from "firebase/firestore";
 import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
-import React from "react";
+import React, { FormEvent } from "react";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { Rating } from "react-simple-star-rating";
@@ -28,7 +29,7 @@ const ReviewProductClient = () => {
 
   const { document: product } = useFetchDocument("products", id);
 
-  const submitReview = (e) => {
+  const submitReview = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const today = new Date();
@@ -48,7 +49,7 @@ const ReviewProductClient = () => {
       addDoc(collection(db, "reviews"), reviewData);
       router.push(`/product-details/${id}`);
     } catch (error) {
-      toast.error(error.message);
+      toast.error(getErrorMessage(error));
     }
   };
 

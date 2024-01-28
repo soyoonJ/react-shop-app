@@ -23,6 +23,7 @@ import Image from "next/image";
 import priceFormat from "@/utils/priceFormat";
 import { FaTrashAlt } from "react-icons/fa";
 import Button from "@/components/button/Button";
+import { ICartItem } from "@/types";
 
 const CartClient = () => {
   const cartItems = useSelector(selectCartItems);
@@ -34,16 +35,16 @@ const CartClient = () => {
 
   const isLoggedIn = useSelector(selectIsLoggedIn);
 
-  const increaseCart = (cart) => {
+  const increaseCart = (cart: ICartItem) => {
     dispatch(ADD_TO_CART(cart));
   };
-  const decreaseCart = (cart) => {
+  const decreaseCart = (cart: ICartItem) => {
     dispatch(DECREASE_CART(cart));
   };
-  const removeFromCart = (cart) => {
+  const removeFromCart = (cart: ICartItem) => {
     dispatch(REMOVE_FROM_CART(cart));
   };
-  const clearCart = (cart) => {
+  const clearCart = () => {
     dispatch(CLEAR_CART());
   };
 

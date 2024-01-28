@@ -4,6 +4,7 @@ import Button from "@/components/button/Button";
 import Heading from "@/components/heading/Heading";
 import Loader from "@/components/loader/Loader";
 import useFetchDocument from "@/hooks/useFetchDocument";
+import { ICartItem } from "@/types";
 import priceFormat from "@/utils/priceFormat";
 import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
@@ -16,7 +17,7 @@ const OrderDetailsClient = () => {
   const { document: order } = useFetchDocument("orders", id);
   const router = useRouter();
 
-  const handleClick = (id) => {
+  const handleClick = (id: string) => {
     router.push(`/review-product/${id}`);
   };
 
@@ -50,7 +51,7 @@ const OrderDetailsClient = () => {
                 </tr>
               </thead>
               <tbody>
-                {order.cartItems.map((cartItem, index) => {
+                {order.cartItems.map((cartItem: ICartItem, index: number) => {
                   const { id, name, price, imageURL, cartQuantity } = cartItem;
                   return (
                     <tr key={id}>
