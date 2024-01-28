@@ -1,6 +1,5 @@
 "use client";
 
-import Divider from "@/components/Divider/Divider";
 import Loader from "@/components/loader/Loader";
 import useFetchDocument from "@/hooks/useFetchDocument";
 import priceFormat from "@/utils/priceFormat";
@@ -11,21 +10,22 @@ import { Rating } from "react-simple-star-rating";
 import styles from "./ProductDetails.module.scss";
 import listCashIcon from "@/assets/list-cash-icon.png";
 import Button from "@/components/button/Button";
-import { setIndexConfiguration } from "firebase/firestore";
 import useFetchDocuments from "@/hooks/useFetchDocuments";
 import ProductReviewItem from "@/components/product/productReviewItem/ProductReviewItem";
 import { useDispatch } from "react-redux";
 import { ADD_TO_CART, CALCULATE_TOTAL_QUANTITY } from "@/redux/slice/cartSlice";
+import Divider from "@/components/divider/Divider";
+import { IReview } from "@/types";
 
 const ProductDetailsClient = () => {
   const { id } = useParams();
 
-  const { document: product } = useFetchDocument("products", id);
+  const { document: product } = useFetchDocument("products", id as string);
 
   const { documents: reviews } = useFetchDocuments("reviews", [
     "productID",
     "==",
-    id,
+    id as string,
   ]);
 
   const dispatch = useDispatch();
@@ -105,7 +105,7 @@ const ProductDetailsClient = () => {
                 <p className={styles.price}>{product.price}원</p>
                 <div className={styles.count}>
                   <Button
-                    onClick={() => setIndexConfiguration((prev) => prev - 1)}
+                    onClick={() => setCount((prev) => prev - 1)}
                     disabled={count > 1 ? false : true}
                     secondary
                   >
@@ -138,7 +138,7 @@ const ProductDetailsClient = () => {
             </p>
           ) : (
             <>
-              {reviews.map((item) => {
+              {reviews.map((item: IReview) => {
                 return (
                   <ProductReviewItem
                     key={item.id}

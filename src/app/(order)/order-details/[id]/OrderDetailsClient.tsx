@@ -14,7 +14,7 @@ import styles from "./OrderDetails.module.scss";
 const OrderDetailsClient = () => {
   const { id } = useParams();
 
-  const { document: order } = useFetchDocument("orders", id);
+  const { document: order } = useFetchDocument("orders", id as string);
   const router = useRouter();
 
   const handleClick = (id: string) => {

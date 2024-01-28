@@ -27,7 +27,7 @@ const ReviewProductClient = () => {
   const userID = useSelector(selectUserID);
   const userName = useSelector(selectUserName);
 
-  const { document: product } = useFetchDocument("products", id);
+  const { document: product } = useFetchDocument("products", id as string);
 
   const submitReview = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();

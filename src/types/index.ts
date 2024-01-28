@@ -34,3 +34,11 @@ export interface IOrder {
     nanoseconds: number;
   };
 }
+
+export interface IReview {
+  id: string;
+  rate: number;
+  review: string;
+  reviewDate: string;
+  userName: string;
+}
