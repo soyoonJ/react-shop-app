@@ -3,12 +3,13 @@ import {
   selectFilteredProducts,
   SORT_PRODUCTS,
 } from "@/redux/slice/filterSlice";
-import React, { useState } from "react";
+import React, { ChangeEvent, useState } from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ProductItem from "../productItem/ProductItem";
 import styles from "./ProductList.module.scss";
 
+// TODO: 강의랑 다른 부분 - props로 products 받아오고 있음. 에러날 경우 체크 필요!
 const ProductList = () => {
   const [sort, setSort] = useState("latest");
 
@@ -29,8 +30,9 @@ const ProductList = () => {
     indexOfLastProduct
   );
 
-  const isRadioSelected = (value) => sort === value;
-  const handleRadioClick = (e) => setSort(e.target.value);
+  const isRadioSelected = (value: string) => sort === value;
+  const handleRadioClick = (e: ChangeEvent<HTMLInputElement>) =>
+    setSort(e.target.value);
 
   return (
     <div className={styles.productList}>

@@ -3,7 +3,19 @@ import React from "react";
 import { Rating } from "react-simple-star-rating";
 import styles from "./ProductReviewItem.module.scss";
 
-const ProductReviewItem = ({ rate, review, reviewDate, userName }) => {
+interface IProductReviewItemProps {
+  rate: number;
+  review: string;
+  reviewDate: string;
+  userName: string;
+}
+
+const ProductReviewItem = ({
+  rate,
+  review,
+  reviewDate,
+  userName,
+}: IProductReviewItemProps) => {
   return (
     <div className={styles.review}>
       <p className={styles.writer}>
