@@ -29,11 +29,11 @@ const CheckoutClient = () => {
   const dispatch = useDispatch();
   const router = useRouter();
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const tossPayment = await loadTossPayments(
-      process.env.NEXT_PUBLIC_TOSS_CLIENT_KEY
+      process.env.NEXT_PUBLIC_TOSS_CLIENT_KEY!
     );
 
     tossPayment

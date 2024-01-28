@@ -109,7 +109,7 @@ const cartSlice = createSlice({
       localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
     },
 
-    CLEAR_CART: (state, action) => {
+    CLEAR_CART: (state) => {
       state.cartItems = [];
       toast.success("장바구니가 비었습니다.");
 

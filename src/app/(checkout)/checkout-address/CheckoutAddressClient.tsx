@@ -7,7 +7,7 @@ import {
   SAVE_SHIPPING_ADDRESS,
 } from "@/redux/slice/checkoutSlice";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { ChangeEvent, FormEvent, useState } from "react";
 import { useDispatch } from "react-redux";
 import styles from "./CheckoutAddress.module.scss";
 
@@ -29,16 +29,16 @@ const CheckoutAddressClient = () => {
   const dispatch = useDispatch();
   const router = useRouter();
 
-  const handleShipping = (e) => {
+  const handleShipping = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setShippingAddress({ ...shippingAddress, [name]: value });
   };
-  const handleBilling = (e) => {
+  const handleBilling = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setBillingAddress({ ...billingAddress, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     dispatch(SAVE_SHIPPING_ADDRESS(shippingAddress));
